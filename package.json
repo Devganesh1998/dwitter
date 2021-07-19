@@ -1,0 +1,22 @@
+{
+  "name": "dwitter",
+  "version": "1.0.0",
+  "description": "Social platform with similar features of twitter.",
+  "main": "src/index.ts",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devganesh1998/dwitter.git"
+  },
+  "author": {
+    "name": "Dev Ganesh Pandian",
+    "email": "devganesh91@gmail.com",
+    "url": "https://github.com/devganesh1998"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Devganesh1998/dwitter/issues"
+  },
+  "homepage": "https://github.com/Devganesh1998/dwitter#readme"
+}
