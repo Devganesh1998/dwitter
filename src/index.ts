@@ -1,2 +1,3 @@
-console.log('dwitter');
-export {};
+const test = () => console.log('dwitter');
+test();
+export default test;
