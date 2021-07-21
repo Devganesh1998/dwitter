@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -25,7 +26,7 @@ module.exports = {
             {
                 test: /\.module\.s(a|c)ss$/,
                 use: [
-                    'style-loader',
+                    isProd ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
@@ -45,7 +46,7 @@ module.exports = {
                 test: /\.s(a|c)ss$/,
                 exclude: /\.module.(s(a|c)ss)$/,
                 use: [
-                    'style-loader',
+                    isProd ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
@@ -70,6 +71,10 @@ module.exports = {
             template: 'public/index.html',
         }),
         new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: isProd ? '[name].[contenthash].style.css' : '[name].css',
+            chunkFilename: isProd ? '[id].[contenthash].css' : '[id].css',
+        }),
     ],
     devtool: 'inline-source-map',
     ...(isProd
