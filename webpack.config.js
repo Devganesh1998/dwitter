@@ -61,6 +61,19 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.(jpe?g|gif|png|svg)$/,
+                type: 'asset',
+                generator: {
+                    filename: 'images/[path][name][ext]',
+                },
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 10 * 1024, // 10kb
+                    },
+                },
+            },
+            { test: /\.txt$/, type: 'asset/source' },
         ],
     },
     resolve: {
@@ -78,7 +91,9 @@ module.exports = {
     ],
     devtool: 'inline-source-map',
     ...(isProd
-        ? {}
+        ? {
+            devtool: 'source-map'
+        }
         : {
               devServer: {
                   contentBase: path.join(__dirname, 'dist'),
