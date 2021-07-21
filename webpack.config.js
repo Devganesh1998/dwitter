@@ -23,6 +23,25 @@ module.exports = {
                 },
             },
             {
+                test: /\.module\.s(a|c)ss$/,
+                loader: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            sourceMap: !isProd,
+                        },
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: !isProd,
+                        },
+                    },
+                ],
+            },
+            {
                 test: /\.s(a|c)ss$/,
                 exclude: /\.module.(s(a|c)ss)$/,
                 loader: [
