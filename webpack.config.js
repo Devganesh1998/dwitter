@@ -24,7 +24,7 @@ module.exports = {
             },
             {
                 test: /\.module\.s(a|c)ss$/,
-                loader: [
+                use: [
                     'style-loader',
                     {
                         loader: 'css-loader',
@@ -44,7 +44,7 @@ module.exports = {
             {
                 test: /\.s(a|c)ss$/,
                 exclude: /\.module.(s(a|c)ss)$/,
-                loader: [
+                use: [
                     'style-loader',
                     {
                         loader: 'css-loader',
