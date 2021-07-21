@@ -16,16 +16,35 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(tsx|ts|jsx|js)x?$/i,
+                test: /\.(tsx|ts|jsx|js)$/i,
                 exclude: /node_modules/,
                 use: {
                     loader: 'ts-loader',
                 },
             },
+            {
+                test: /\.s(a|c)ss$/,
+                exclude: /\.module.(s(a|c)ss)$/,
+                loader: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: !isProd,
+                        },
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: !isProd,
+                        },
+                    },
+                ],
+            },
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', '.scss'],
     },
     plugins: [
         new HtmlWebpackPlugin({
