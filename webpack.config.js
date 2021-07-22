@@ -2,7 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -97,6 +98,16 @@ module.exports = {
                 },
             ],
         }),
+        ...(isProd
+            ? [
+                  new CompressionPlugin({
+                      filename: '[path][base].gz',
+                      algorithm: 'gzip',
+                      test: /\.(js|css|html|png)$/,
+                      minRatio: 0.8,
+                  }),
+              ]
+            : []),
     ],
     devtool: 'inline-source-map',
     ...(isProd
