@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -81,19 +82,27 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'public/index.html',
+            template: 'html-template/index.html',
         }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: isProd ? '[name].[contenthash].style.css' : '[name].css',
             chunkFilename: isProd ? '[id].[contenthash].css' : '[id].css',
         }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'public'),
+                    to: '[path][name][ext]',
+                },
+            ],
+        }),
     ],
     devtool: 'inline-source-map',
     ...(isProd
         ? {
-            devtool: 'source-map'
-        }
+              devtool: 'source-map',
+          }
         : {
               devServer: {
                   contentBase: path.join(__dirname, 'dist'),
