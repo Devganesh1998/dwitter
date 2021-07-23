@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx",
     "build": "NODE_ENV=production webpack",
+    "plain-build": "NODE_ENV=production SKIP_TYPE_CHECK=true webpack",
     "dev": "webpack serve --progress"
   },
   "repository": {
@@ -29,6 +30,7 @@
     "compression-webpack-plugin": "^9.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
+    "esbuild-loader": "^2.15.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
