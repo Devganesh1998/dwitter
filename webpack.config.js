@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -21,9 +22,14 @@ module.exports = {
             {
                 test: /\.(tsx|ts|jsx|js)$/i,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'ts-loader',
-                },
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.module\.s(a|c)ss$/,
@@ -90,6 +96,7 @@ module.exports = {
             filename: isProd ? '[name].[contenthash].style.css' : '[name].css',
             chunkFilename: isProd ? '[id].[contenthash].css' : '[id].css',
         }),
+        new ForkTsCheckerWebpackPlugin(),
         new CopyPlugin({
             patterns: [
                 {
