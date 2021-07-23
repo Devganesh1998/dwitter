@@ -7,6 +7,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
+const isSkipTypeCheck = process.env.SKIP_TYPE_CHECK === 'true';
 
 module.exports = {
     mode: isProd ? 'production' : 'development',
@@ -24,9 +25,10 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: 'ts-loader',
+                        loader: 'esbuild-loader',
                         options: {
-                            transpileOnly: true,
+                            loader: 'tsx',
+                            target: 'es2015',
                         },
                     },
                 ],
@@ -96,7 +98,7 @@ module.exports = {
             filename: isProd ? '[name].[contenthash].style.css' : '[name].css',
             chunkFilename: isProd ? '[id].[contenthash].css' : '[id].css',
         }),
-        new ForkTsCheckerWebpackPlugin(),
+        !isSkipTypeCheck && new ForkTsCheckerWebpackPlugin(),
         new CopyPlugin({
             patterns: [
                 {
@@ -115,7 +117,7 @@ module.exports = {
                   }),
               ]
             : []),
-    ],
+    ].filter(Boolean),
     devtool: 'inline-source-map',
     ...(isProd
         ? {
